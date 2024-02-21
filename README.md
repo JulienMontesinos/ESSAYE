@@ -67,16 +67,56 @@ def draw_task(name, y_coord):
     return task
 
 def draw_buttons(name, x_coord):
-    color_info = tasks[name]
-    color_button = pygame.draw.rect(screen, color_info['color'], [x_coord, 360, 50, 30])
-    color_cost = font.render(str(round(costs[name],2)), True, black)
-    screen.blit(color_cost, (x_coord + 6, 370))
-    if not owned[name]:
-        manager_button = pygame.draw.rect(screen, color_info['color'], [x_coord, 440, 55, 30])
-        manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
-        screen.blit(manager_text, (x_coord + 6, 450))
-    else:
-        manager_button = pygame.draw.rect(screen, black, [x_coord, 440, 55, 30])
+    if name == 'green':
+       color_button = pygame.draw.rect(screen, green, [x_coord, 360, 50, 30])
+       color_cost = font.render(str(round(costs[name],2)), True, black)
+       screen.blit(color_cost, (x_coord + 6, 370))
+       if not owned[name]:
+           manager_button = pygame.draw.rect(screen, green, [x_coord, 440, 55, 30])
+           manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+           screen.blit(manager_text, (x_coord + 6, 450))
+       else:
+           manager_button = pygame.draw.rect(screen, black, [x_coord, 440, 55, 30])
+    if name == 'red':
+       color_button = pygame.draw.rect(screen, red, [x_coord, 360, 50, 30])
+       color_cost = font.render(str(round(costs[name],2)), True, black)
+       screen.blit(color_cost, (x_coord + 6, 370))
+       if not owned[name]:
+           manager_button = pygame.draw.rect(screen, red, [x_coord, 440, 55, 30])
+           manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+           screen.blit(manager_text, (x_coord + 6, 450))
+       else:
+           manager_button = pygame.draw.rect(screen, black, [x_coord, 440, 55, 30])
+    if name == 'orange':
+       color_button = pygame.draw.rect(screen, orange, [x_coord, 360, 50, 30])
+       color_cost = font.render(str(round(costs[name],2)), True, black)
+       screen.blit(color_cost, (x_coord + 6, 370))
+       if not owned[name]:
+           manager_button = pygame.draw.rect(screen, orange, [x_coord, 440, 55, 30])
+           manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+           screen.blit(manager_text, (x_coord + 6, 450))
+       else:
+           manager_button = pygame.draw.rect(screen, black, [x_coord, 440, 55, 30])
+    if name == 'white':
+       color_button = pygame.draw.rect(screen, white, [x_coord, 360, 50, 30])
+       color_cost = font.render(str(round(costs[name],2)), True, black)
+       screen.blit(color_cost, (x_coord + 6, 370))
+       if not owned[name]:
+           manager_button = pygame.draw.rect(screen, white, [x_coord, 440, 55, 30])
+           manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+           screen.blit(manager_text, (x_coord + 6, 450))
+       else:
+           manager_button = pygame.draw.rect(screen, black, [x_coord, 440, 55, 30])
+    if name == 'purple':
+       color_button = pygame.draw.rect(screen, purple, [x_coord, 360, 50, 30])
+       color_cost = font.render(str(round(costs[name],2)), True, black)
+       screen.blit(color_cost, (x_coord + 6, 370))
+       if not owned[name]:
+           manager_button = pygame.draw.rect(screen, purple, [x_coord, 440, 55, 30])
+           manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+           screen.blit(manager_text, (x_coord + 6, 450))
+       else:
+           manager_button = pygame.draw.rect(screen, black, [x_coord, 440, 55, 30])
     return color_button, manager_button
 
 def click(event_pos):
