@@ -1,4 +1,5 @@
 # ESSAYE
+```
 import pygame
 
 pygame.init()
@@ -136,6 +137,6 @@ while running:
     pygame.display.flip()
 
 pygame.quit()
-
+```
 
 
