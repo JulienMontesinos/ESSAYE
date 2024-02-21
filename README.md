@@ -1,20 +1,22 @@
 # ESSAYE
 ```
 import pygame
+from pygame import *
 
 pygame.init()
 
 red = (255,0,0)
 green = (0,255,0)
 blue = (0,0,255)
-white = (255,255,255)
+white = (128,128,128)
 black = (0,0,0)
 purple = (127,0,255)
 orange = (255,165,0)
+white_re = (255, 255, 255)
 
-screen = pygame.display.set_mode([300,450])
+screen = pygame.display.set_mode([800,500])
 pygame.display.set_caption('Petit Jeu sur internet')
-background = black
+#background = black
 framerate = 60
 font = pygame.font.Font('freesansbold.ttf', 16)
 timer = pygame.time.Clock()
@@ -32,6 +34,9 @@ tasks = {
     'purple': {'color': purple, 'value': 5, 'draw': False, 'length': 0, 'speed': 1, 'color_index': 0, 'colors': [(138, 43, 226), (153, 50, 204), (216, 191, 216)]}
 }
 original_speeds = {'green': 5, 'red': 4, 'orange': 3, 'white': 2, 'purple': 1}
+#les images
+fond = image.load('fond-ecran.jpg')
+fond = fond.convert()
 
 def manager_progress():
     for name, task_info in tasks.items():
@@ -55,23 +60,23 @@ def draw_task(name, y_coord):
 
     task = pygame.draw.circle(screen, task_info['color'], (30, y_coord), 20, 5)
     pygame.draw.rect(screen, task_info['color'], [70, y_coord - 15, 200, 30])
-    pygame.draw.rect(screen, black, [75, y_coord - 10, 190, 20])
+    pygame.draw.rect(screen, white_re, [75, y_coord - 10, 190, 20])
     pygame.draw.rect(screen, task_info['color'], [70, y_coord - 15, task_info['length'], 30])
-    value_text = font.render(str(round(task_info['value'],2)), True, white)
+    value_text = font.render(str(round(task_info['value'],2)), True, black)
     screen.blit(value_text, (20, y_coord -10))
     return task
 
 def draw_buttons(name, x_coord):
     color_info = tasks[name]
-    color_button = pygame.draw.rect(screen, color_info['color'], [x_coord, 340, 50, 30])
+    color_button = pygame.draw.rect(screen, color_info['color'], [x_coord, 360, 50, 30])
     color_cost = font.render(str(round(costs[name],2)), True, black)
-    screen.blit(color_cost, (x_coord + 6, 350))
+    screen.blit(color_cost, (x_coord + 6, 370))
     if not owned[name]:
-        manager_button = pygame.draw.rect(screen, color_info['color'], [x_coord, 405, 50, 30])
+        manager_button = pygame.draw.rect(screen, color_info['color'], [x_coord, 440, 55, 30])
         manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
-        screen.blit(manager_text, (x_coord + 6, 415))
+        screen.blit(manager_text, (x_coord + 6, 450))
     else:
-        manager_button = pygame.draw.rect(screen, black, [x_coord, 405, 50, 30])
+        manager_button = pygame.draw.rect(screen, black, [x_coord, 440, 55, 30])
     return color_button, manager_button
 
 def click(event_pos):
@@ -120,7 +125,8 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             click(event.pos)
 
-    screen.fill(background)
+    #screen.fill(background)
+    screen.blit(fond, (0,0))
 
     y_coords = [50, 110, 170, 230, 290]
     for i, name in enumerate(tasks.keys()):
@@ -132,8 +138,13 @@ while running:
         color_button, manager_button = draw_buttons(name, x_coords[i])
         button_rects[name] = {'color_button': color_button, 'manager_button': manager_button}
 
-    display_score = font.render('Money: $'+str(round(score, 2)), True, white, black)
+    #display_score = font.render('Money: $'+str(round(score, 2)), True, white, black)
+    display_score = font.render('Money: $'+str(round(score, 2)), True, black)
     screen.blit(display_score, (10,5))
+    vitesse = font.render('Vitesste', True, black)
+    screen.blit(vitesse, (10,335))
+    manager = font.render('Manager', True, black)
+    screen.blit(manager, (10,415))
     pygame.display.flip()
 
 pygame.quit()
