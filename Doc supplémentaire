@@ -58,3 +58,19 @@ while not done:
     pygame.display.flip()
 
 pygame.quit()
+if event.type == pygame.KEYDOWN:
+    # Check for backspace
+    if event.key == pygame.K_BACKSPACE:
+        if active_commande:
+            # 删除 user_text 的最后一个字符
+            user_text = user_text[:-1]
+        elif active_numero:
+            # 删除 user_numero 的最后一个字符
+            user_numero = user_numero[:-1]
+    else:
+        if active_commande:
+            # 向 user_text 添加字符
+            user_text += event.unicode
+        elif active_numero:
+            # 向 user_numero 添加字符
+            user_numero += event.unicode
