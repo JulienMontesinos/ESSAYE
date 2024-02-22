@@ -1,5 +1,5 @@
 #site
-
+1
 Création de input texte: https://www.geeksforgeeks.org/how-to-create-a-text-input-box-with-pygame/
 import pygame
 import sys
