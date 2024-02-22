@@ -288,6 +288,37 @@ while running:
     pygame.display.flip()
 
 pygame.quit()
+
+
+
+{
+  "green": {
+    "numero": "1",
+    "color_sequence": ["darkgreen", "lightgreen", "forestgreen"],
+    "user_input_color": "user_input"
+  },
+  "red": {
+    "numero": "2",
+    "color_sequence": ["darkred", "lightcoral", "indianred"],
+    "user_input_color": "user_input"
+  },
+  "orange": {
+    "numero": "3",
+    "color_sequence": ["darkorange", "coral", "tomato"],
+    "user_input_color": "user_input"
+  },
+  "white": {
+    "numero": "4",
+    "color_sequence": ["lightgrey", "silver", "gainsboro"],
+    "user_input_color": "user_input"
+  },
+  "purple": {
+    "numero": "5",
+    "color_sequence": ["indigo", "darkviolet", "plum"],
+    "user_input_color": "user_input"
+  }
+}
+
 ```
 
 
