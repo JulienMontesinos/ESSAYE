@@ -304,34 +304,33 @@ pygame.quit()
 
 
 
-
 {
-  "green": {
-    "numero": "1",
-    "color_sequence": ["darkgreen", "lightgreen", "forestgreen"],
-    "user_input_color": "user_input"
-  },
-  "red": {
-    "numero": "2",
-    "color_sequence": ["darkred", "lightcoral", "indianred"],
-    "user_input_color": "user_input"
-  },
-  "orange": {
-    "numero": "3",
-    "color_sequence": ["darkorange", "coral", "tomato"],
-    "user_input_color": "user_input"
-  },
-  "white": {
-    "numero": "4",
-    "color_sequence": ["lightgrey", "silver", "gainsboro"],
-    "user_input_color": "user_input"
-  },
-  "purple": {
-    "numero": "5",
-    "color_sequence": ["indigo", "darkviolet", "plum"],
-    "user_input_color": "user_input"
+    "green": {
+      "numero": "1",
+      "colors_defaut": "green",
+      "colors": ["(0,100,0)", "(107,142,35)", "(173,255,47)"]
+    },
+    "red": {
+      "numero": "2",
+      "colors_defaut": "red",
+      "colors": ["(139,0,0)", "(250,128,114)", "(178,34,34)"]
+    },
+    "orange": {
+      "numero": "3",
+      "colors_defaut": "orange",
+      "colors": ["(255,140,0)", "(255,127,80)", "(255,255,224)"]
+    },
+    "white": {
+      "numero": "4",
+      "colors_defaut": "white",
+      "colors": ["(211,211,211)", "(105,105,105)", "(47,79,79)"]
+    },
+    "purple": {
+      "numero": "5",
+      "colors_defaut": "purple",
+      "colors": ["(75,0,130)", "(238,130,238)", "(186,85,211)"]
+    }
   }
-}
 
 
 
