@@ -13,6 +13,14 @@ black = (0,0,0)
 purple = (127,0,255)
 orange = (255,165,0)
 white_re = (255, 255, 255)
+user_text = ''
+user_numero = ''
+color_active = pygame.Color('lightskyblue3')
+color = color_passive = white_re
+active_commande = False
+active_numero = False
+base_font = pygame.font.Font(None, 28) 
+
 
 screen = pygame.display.set_mode([800,500])
 pygame.display.set_caption('Petit Jeu sur internet')
@@ -119,7 +127,12 @@ def draw_buttons(name, x_coord):
            manager_button = pygame.draw.rect(screen, black, [x_coord, 440, 55, 30])
     return color_button, manager_button
 
+input_rect = pygame.Rect(450, 390, 140, 28)
+input_recta = pygame.Rect(450, 460, 60, 28)
+
 def click(event_pos):
+    global active_commande
+    global active_numero
     global score
     global change_color
     for name, task_info in tasks.items():
@@ -151,7 +164,15 @@ def click(event_pos):
             tasks[name]['value'] += 0.15
             costs[name] += 0.1
             score -= costs[name]
-            return True  
+            return True 
+    if input_rect.collidepoint(event.pos): 
+         active_commande = True
+    else: 
+         active_commande = False
+    if input_recta.collidepoint(event.pos): 
+         active_numero = True
+    else: 
+         active_numero = False
     return False  
 
 running = True
@@ -164,9 +185,66 @@ while running:
             running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
             click(event.pos)
+        if event.type == pygame.KEYDOWN: 
+            # Check for backspace 
+            if event.key == pygame.K_BACKSPACE: 
+                # get text input from 0 to -1 i.e. end. 
+                user_text = user_text[:-1] 
+  
+            # Unicode standard is used for string 
+            # formation 
+            else: 
+                user_text += event.unicode
 
+        if event.type == pygame.KEYDOWN: 
+            # Check for backspace 
+            if event.key == pygame.K_BACKSPACE: 
+                # get text input from 0 to -1 i.e. end.  
+                user_numero = user_numero[:-1]
+  
+            # Unicode standard is used for string 
+            # formation 
+            else: 
+                user_numero += event.unicode
+      
+    # it will set background color of screen 
+    screen.fill((255, 255, 255)) 
+  
+    if active_commande: 
+        color = color_active 
+    else: 
+        color = color_passive 
+
+    if active_numero: 
+        color = color_active 
+    else: 
+        color = color_passive 
     #screen.fill(background)
     screen.blit(fond, (0,0))
+    if active_commande: 
+        color = color_active 
+        pygame.draw.rect(screen, color, input_rect)
+    else: 
+        color = color_passive 
+        pygame.draw.rect(screen, color, input_rect, 2)
+    if active_numero: 
+        color = color_active 
+        pygame.draw.rect(screen, color, input_recta)
+    else: 
+        color = color_passive 
+        pygame.draw.rect(screen, color, input_recta, 2)
+    #pygame.draw.rect(screen, white_re, [460, 390, 200,80]).set_alpha(200)
+    text_surface = base_font.render(user_text, True, (255, 255, 255))
+    text_surfacea = base_font.render(user_numero, True, (255, 255, 255))
+
+ 
+    # render at position stated in arguments 
+    screen.blit(text_surface, (input_rect.x+5, input_rect.y+5)) 
+    input_rect.w = max(220, text_surface.get_width()+10)
+    input_rect.h = max(28, text_surface.get_height()+5)
+    screen.blit(text_surfacea, (input_recta.x+5, input_recta.y+5))
+    input_recta.w = max(220, text_surfacea.get_width()+10)
+    input_recta.h = max(28, text_surfacea.get_height()+5) 
 
     y_coords = [50, 110, 170, 230, 290]
     for i, name in enumerate(tasks.keys()):
@@ -184,7 +262,12 @@ while running:
     vitesse = font.render('Vitesste', True, black)
     screen.blit(vitesse, (10,335))
     manager = font.render('Manager', True, black)
+    commande_color = font.render('Avoir des changements?', True, black)
+    screen.blit(commande_color,(460, 365))
+    commande_numero = font.render('Indiquer la numéro', True, black)
+    screen.blit(commande_numero,(460, 435))
     screen.blit(manager, (10,415))
+    
     pygame.display.flip()
 
 pygame.quit()
