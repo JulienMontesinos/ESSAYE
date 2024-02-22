@@ -1,3 +1,60 @@
 #site
 
 Création de input texte: https://www.geeksforgeeks.org/how-to-create-a-text-input-box-with-pygame/
+import pygame
+import sys
+
+pygame.init()
+
+# 设置屏幕大小
+screen_width, screen_height = 640, 480
+screen = pygame.display.set_mode((screen_width, screen_height))
+
+# 定义颜色
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+
+# 设置字体和大小
+font_size = 24
+font = pygame.font.Font(None, font_size)
+
+input_box = pygame.Rect(100, 100, 440, font_size+10)  # 输入框位置和大小
+text = ""  # 初始化文本变量
+done = False
+
+while not done:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_BACKSPACE:
+                text = text[:-1]
+            else:
+                text += event.unicode
+
+    screen.fill(WHITE)
+    pygame.draw.rect(screen, BLACK, input_box, 2)  # 画输入框
+
+    # 文本跳行逻辑
+    words = text.split(' ')  # 假设以空格为分隔符进行简单的分词
+    line = ''
+    y_offset = 0
+    for word in words:
+        test_line = line + word + ' '
+        # 计算这行文本的宽度
+        line_surface = font.render(test_line, True, BLACK)
+        line_width, line_height = line_surface.get_size()
+        if line_width < input_box.width:
+            line = test_line
+        else:
+            # 如果这行文本超出了输入框的宽度，则渲染当前行并开始新的一行
+            screen.blit(font.render(line, True, BLACK), (input_box.x+5, input_box.y+5+y_offset))
+            line = word + ' '
+            y_offset += line_height
+
+    # 渲染最后一行文本
+    screen.blit(font.render(line, True, BLACK), (input_box.x+5, input_box.y+5+y_offset))
+
+    pygame.display.flip()
+
+pygame.quit()
