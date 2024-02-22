@@ -32,6 +32,7 @@ change_color = True
 score = 1000000
 
 costs = {'green': 1, 'red': 2, 'orange': 3, 'white': 4, 'purple': 5}
+#colors_managers_numeros = {'1': green,'2': red, '3': orange, '4': white, '5': purple }
 owned = {'green': False, 'red': False, 'orange': False, 'white': False, 'purple': False}
 manager_costs = {'green': 100, 'red': 500, 'orange': 1800, 'white': 4000, 'purple': 10000}
 tasks = {
@@ -80,9 +81,14 @@ def draw_buttons(name, x_coord):
        color_cost = font.render(str(round(costs[name],2)), True, black)
        screen.blit(color_cost, (x_coord + 6, 370))
        if not owned[name]:
-           manager_button = pygame.draw.rect(screen, green, [x_coord, 440, 55, 30])
-           manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
-           screen.blit(manager_text, (x_coord + 6, 450))
+           if user_numero == '1':
+              manager_button = pygame.draw.rect(screen, user_text, [x_coord, 440, 55, 30])
+              manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+              screen.blit(manager_text, (x_coord + 6, 450))
+           else:
+                manager_button = pygame.draw.rect(screen, green, [x_coord, 440, 55, 30])
+                manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+                screen.blit(manager_text, (x_coord + 6, 450))
        else:
            manager_button = pygame.draw.rect(screen, black, [x_coord, 440, 55, 30])
     if name == 'red':
@@ -90,9 +96,14 @@ def draw_buttons(name, x_coord):
        color_cost = font.render(str(round(costs[name],2)), True, black)
        screen.blit(color_cost, (x_coord + 6, 370))
        if not owned[name]:
-           manager_button = pygame.draw.rect(screen, red, [x_coord, 440, 55, 30])
-           manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
-           screen.blit(manager_text, (x_coord + 6, 450))
+           if user_numero == '2':
+              manager_button = pygame.draw.rect(screen, user_text, [x_coord, 440, 55, 30])
+              manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+              screen.blit(manager_text, (x_coord + 6, 450))
+           else:
+               manager_button = pygame.draw.rect(screen, red, [x_coord, 440, 55, 30])
+               manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+               screen.blit(manager_text, (x_coord + 6, 450))
        else:
            manager_button = pygame.draw.rect(screen, black, [x_coord, 440, 55, 30])
     if name == 'orange':
@@ -100,9 +111,14 @@ def draw_buttons(name, x_coord):
        color_cost = font.render(str(round(costs[name],2)), True, black)
        screen.blit(color_cost, (x_coord + 6, 370))
        if not owned[name]:
-           manager_button = pygame.draw.rect(screen, orange, [x_coord, 440, 55, 30])
-           manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
-           screen.blit(manager_text, (x_coord + 6, 450))
+           if user_numero == '3':
+              manager_button = pygame.draw.rect(screen, user_text, [x_coord, 440, 55, 30])
+              manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+              screen.blit(manager_text, (x_coord + 6, 450))
+           else:
+              manager_button = pygame.draw.rect(screen, orange, [x_coord, 440, 55, 30])
+              manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+              screen.blit(manager_text, (x_coord + 6, 450))
        else:
            manager_button = pygame.draw.rect(screen, black, [x_coord, 440, 55, 30])
     if name == 'white':
@@ -110,9 +126,14 @@ def draw_buttons(name, x_coord):
        color_cost = font.render(str(round(costs[name],2)), True, black)
        screen.blit(color_cost, (x_coord + 6, 370))
        if not owned[name]:
-           manager_button = pygame.draw.rect(screen, white, [x_coord, 440, 55, 30])
-           manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
-           screen.blit(manager_text, (x_coord + 6, 450))
+           if user_numero == '4':
+                manager_button = pygame.draw.rect(screen, user_text, [x_coord, 440, 55, 30])
+                manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+                screen.blit(manager_text, (x_coord + 6, 450))
+           else:
+                manager_button = pygame.draw.rect(screen, white, [x_coord, 440, 55, 30])
+                manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+                screen.blit(manager_text, (x_coord + 6, 450))
        else:
            manager_button = pygame.draw.rect(screen, black, [x_coord, 440, 55, 30])
     if name == 'purple':
@@ -120,9 +141,14 @@ def draw_buttons(name, x_coord):
        color_cost = font.render(str(round(costs[name],2)), True, black)
        screen.blit(color_cost, (x_coord + 6, 370))
        if not owned[name]:
-           manager_button = pygame.draw.rect(screen, purple, [x_coord, 440, 55, 30])
-           manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
-           screen.blit(manager_text, (x_coord + 6, 450))
+           if user_numero == '5':
+                manager_button = pygame.draw.rect(screen, user_text, [x_coord, 440, 55, 30])
+                manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+                screen.blit(manager_text, (x_coord + 6, 450))
+           else: 
+                manager_button = pygame.draw.rect(screen, purple, [x_coord, 440, 55, 30])
+                manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+                screen.blit(manager_text, (x_coord + 6, 450))
        else:
            manager_button = pygame.draw.rect(screen, black, [x_coord, 440, 55, 30])
     return color_button, manager_button
@@ -187,25 +213,17 @@ while running:
             click(event.pos)
         if event.type == pygame.KEYDOWN: 
             # Check for backspace 
-            if event.key == pygame.K_BACKSPACE: 
-                # get text input from 0 to -1 i.e. end. 
-                user_text = user_text[:-1] 
-  
-            # Unicode standard is used for string 
-            # formation 
-            else: 
-                user_text += event.unicode
-
-        if event.type == pygame.KEYDOWN: 
-            # Check for backspace 
-            if event.key == pygame.K_BACKSPACE: 
-                # get text input from 0 to -1 i.e. end.  
-                user_numero = user_numero[:-1]
-  
-            # Unicode standard is used for string 
-            # formation 
-            else: 
-                user_numero += event.unicode
+    # Check for backspace
+           if event.key == pygame.K_BACKSPACE:
+               if active_commande:
+                   user_text = user_text[:-1]
+               elif active_numero:
+                    user_numero = user_numero[:-1]
+           else:
+                if active_commande:
+                   user_text += event.unicode
+                elif active_numero:
+                   user_numero += event.unicode
       
     # it will set background color of screen 
     screen.fill((255, 255, 255)) 
@@ -267,7 +285,6 @@ while running:
     commande_numero = font.render('Indiquer la numéro', True, black)
     screen.blit(commande_numero,(460, 435))
     screen.blit(manager, (10,415))
-    
     pygame.display.flip()
 
 pygame.quit()
