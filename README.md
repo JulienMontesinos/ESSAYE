@@ -2,6 +2,7 @@
 ```
 import pygame
 from pygame import *
+import json
 
 pygame.init()
 
@@ -15,12 +16,16 @@ orange = (255,165,0)
 white_re = (255, 255, 255)
 user_text = ''
 user_numero = ''
-color_active = pygame.Color('lightskyblue3')
+color_active = pygame.Color((135,206,250))
 color = color_passive = white_re
 active_commande = False
 active_numero = False
 base_font = pygame.font.Font(None, 28) 
 
+with open('C:/Users/BWG91HX/OneDrive - Groupe BPCE/Documents/Essaie/manager_color.json', 'r') as manager_file:
+    managers_colors_change = json.load(manager_file)
+
+color_indices = {name: 0 for name in managers_colors_change.keys()}
 
 screen = pygame.display.set_mode([800,500])
 pygame.display.set_caption('Petit Jeu sur internet')
@@ -29,7 +34,7 @@ framerate = 60
 font = pygame.font.Font('freesansbold.ttf', 16)
 timer = pygame.time.Clock()
 change_color = True
-score = 1000000
+score = 100000
 
 costs = {'green': 1, 'red': 2, 'orange': 3, 'white': 4, 'purple': 5}
 #colors_managers_numeros = {'1': green,'2': red, '3': orange, '4': white, '5': purple }
@@ -76,6 +81,10 @@ def draw_task(name, y_coord):
     return task
 
 def draw_buttons(name, x_coord):
+    global user_numero, user_text, color_indices  # 使用全局变量
+    color_info = managers_colors_change.get(name, {})
+    colors = color_info.get("colors", ["black"])
+    current_color_index = color_indices[name]
     if name == 'green':
        color_button = pygame.draw.rect(screen, green, [x_coord, 360, 50, 30])
        color_cost = font.render(str(round(costs[name],2)), True, black)
@@ -291,6 +300,11 @@ pygame.quit()
 
 
 
+
+
+
+
+
 {
   "green": {
     "numero": "1",
@@ -318,6 +332,10 @@ pygame.quit()
     "user_input_color": "user_input"
   }
 }
+
+
+
+
 
 
 
