@@ -3,7 +3,8 @@
 import pygame
 from pygame import *
 import json
-import time
+import tkinter as tk
+from tkinter import filedialog
 
 pygame.init()
 
@@ -21,12 +22,11 @@ color_active = pygame.Color((135,206,250))
 color = color_passive = white_re
 active_commande = False
 active_numero = False
-base_font = pygame.font.Font(None, 28) 
-
-with open('color-manager.json', 'r') as manager_file:
-    managers_colors_change = json.load(manager_file)
-
-global_color_indices = {name: 0 for name in managers_colors_change}
+base_font = pygame.font.Font(None, 28)
+button_color = (139, 0, 0) 
+button_position = (480, 280, 140, 30)
+button_text = 'Upload JSON'
+global_color_indices = ''
 
 screen = pygame.display.set_mode([800,500])
 pygame.display.set_caption('Petit Jeu sur internet')
@@ -88,7 +88,7 @@ def draw_task(name, y_coord):
 
 
 def draw_buttons(name, x_coord):
-    global user_numero, user_text, global_color_indices, i  
+    global user_numero, user_text, global_color_indices, managers_colors_change 
     color_info = managers_colors_change.get(name, {})
     default_color_str = color_info.get("color", "(0, 0, 0)")
     default_color = str_to_rgb(default_color_str)
@@ -106,14 +106,11 @@ def draw_buttons(name, x_coord):
               manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
               screen.blit(manager_text, (x_coord + 6, 450))
            else:
-                #manager_button = pygame.draw.rect(screen, color_info['color'], [x_coord, 440, 55, 30])
-                #manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
-                #screen.blit(manager_text, (x_coord + 6, 450))
                 #color_info['color_index'] = (color_info['color_indices'] + 1) % len(color_info['colors'])
                 #color_info['color'] = color_info['colors'][color_info['color_indices']]
-                use_color = current_color
-                global_color_indices[name] = (current_color_index + 1) % len(colors) if colors else 0
-                manager_button = pygame.draw.rect(screen, use_color, [x_coord, 440, 55, 30])
+                #use_color = current_color
+                #global_color_indices[name] = (current_color_index + 1) % len(colors) if colors else 0
+                manager_button = pygame.draw.rect(screen, green, [x_coord, 440, 55, 30])
                 manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
                 screen.blit(manager_text, (x_coord + 6, 450))
        else:
@@ -128,14 +125,14 @@ def draw_buttons(name, x_coord):
               manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
               screen.blit(manager_text, (x_coord + 6, 450))
            else:
-               #manager_button = pygame.draw.rect(screen, red, [x_coord, 440, 55, 30])
-               #manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
-               #screen.blit(manager_text, (x_coord + 6, 450))
-               use_color = current_color
-               global_color_indices[name] = (current_color_index + 1) % len(colors) if colors else 0
-               manager_button = pygame.draw.rect(screen, use_color, [x_coord, 440, 55, 30])
+               manager_button = pygame.draw.rect(screen, red, [x_coord, 440, 55, 30])
                manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
                screen.blit(manager_text, (x_coord + 6, 450))
+               #use_color = current_color
+               #global_color_indices[name] = (current_color_index + 1) % len(colors) if colors else 0
+               #manager_button = pygame.draw.rect(screen, use_color, [x_coord, 440, 55, 30])
+               #manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+               #screen.blit(manager_text, (x_coord + 6, 450))
        else:
            manager_button = pygame.draw.rect(screen, black, [x_coord, 440, 55, 30])
     if name == 'orange':
@@ -148,14 +145,14 @@ def draw_buttons(name, x_coord):
               manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
               screen.blit(manager_text, (x_coord + 6, 450))
            else:
-              #manager_button = pygame.draw.rect(screen, orange, [x_coord, 440, 55, 30])
-              #manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
-              #screen.blit(manager_text, (x_coord + 6, 450))
-              use_color = current_color
-              global_color_indices[name] = (current_color_index + 1) % len(colors) if colors else 0
-              manager_button = pygame.draw.rect(screen, use_color, [x_coord, 440, 55, 30])
+              manager_button = pygame.draw.rect(screen, orange, [x_coord, 440, 55, 30])
               manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
               screen.blit(manager_text, (x_coord + 6, 450))
+              #use_color = current_color
+              #global_color_indices[name] = (current_color_index + 1) % len(colors) if colors else 0
+              #manager_button = pygame.draw.rect(screen, use_color, [x_coord, 440, 55, 30])
+              #manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+              #screen.blit(manager_text, (x_coord + 6, 450))
        else:
            manager_button = pygame.draw.rect(screen, black, [x_coord, 440, 55, 30])
     if name == 'white':
@@ -168,14 +165,14 @@ def draw_buttons(name, x_coord):
                 manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
                 screen.blit(manager_text, (x_coord + 6, 450))
            else:
-                #manager_button = pygame.draw.rect(screen, white, [x_coord, 440, 55, 30])
-                #manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
-                #screen.blit(manager_text, (x_coord + 6, 450))
-                use_color = current_color
-                global_color_indices[name] = (current_color_index + 1) % len(colors) if colors else 0
-                manager_button = pygame.draw.rect(screen, use_color, [x_coord, 440, 55, 30])
+                manager_button = pygame.draw.rect(screen, white, [x_coord, 440, 55, 30])
                 manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
                 screen.blit(manager_text, (x_coord + 6, 450))
+                #use_color = current_color
+                #global_color_indices[name] = (current_color_index + 1) % len(colors) if colors else 0
+                #manager_button = pygame.draw.rect(screen, use_color, [x_coord, 440, 55, 30])
+                #manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+                #screen.blit(manager_text, (x_coord + 6, 450))
        else:
            manager_button = pygame.draw.rect(screen, black, [x_coord, 440, 55, 30])
     if name == 'purple':
@@ -188,17 +185,43 @@ def draw_buttons(name, x_coord):
                 manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
                 screen.blit(manager_text, (x_coord + 6, 450))
            else: 
-                #manager_button = pygame.draw.rect(screen, purple, [x_coord, 440, 55, 30])
-                #manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
-                #screen.blit(manager_text, (x_coord + 6, 450))
-                use_color = current_color
-                global_color_indices[name] = (current_color_index + 1) % len(colors) if colors else 0
-                manager_button = pygame.draw.rect(screen, use_color, [x_coord, 440, 55, 30])
+                manager_button = pygame.draw.rect(screen, purple, [x_coord, 440, 55, 30])
                 manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
                 screen.blit(manager_text, (x_coord + 6, 450))
+                #use_color = current_color
+                #global_color_indices[name] = (current_color_index + 1) % len(colors) if colors else 0
+                #manager_button = pygame.draw.rect(screen, use_color, [x_coord, 440, 55, 30])
+                #manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+                #screen.blit(manager_text, (x_coord + 6, 450))
        else:
            manager_button = pygame.draw.rect(screen, black, [x_coord, 440, 55, 30])
     return color_button, manager_button
+
+def draw_button(screen, position, text):
+    pygame.draw.rect(screen, button_color, position)
+    text_render = base_font.render(text, True, black)
+    screen.blit(text_render, (position[0] + 10, position[1] + 10))
+
+def is_button_clicked(position, mouse_pos):
+    x, y, width, height = position
+    return x < mouse_pos[0] < x + width and y < mouse_pos[1] < y + height
+
+def open_file_dialog():
+    root = tk.Tk()
+    root.withdraw()  
+    file_path = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
+    return file_path
+
+def read_json(file_path):
+    try:
+        with open(file_path, 'r') as manager_file:
+            managers_colors_change = json.load(manager_file)
+        global_color_indices = {name: 0 for name in managers_colors_change}
+        return managers_colors_change, global_color_indices
+    except Exception as e:
+        print(e)
+    
+
 
 input_rect = pygame.Rect(450, 390, 140, 28)
 input_recta = pygame.Rect(450, 460, 60, 28)
@@ -258,6 +281,12 @@ while running:
             running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
             click(event.pos)
+            mouse_pos = event.pos
+            if is_button_clicked(button_position, mouse_pos):
+                file_path = open_file_dialog()
+                if file_path:  # 确保用户选择了文件
+                    managers_colors_change, global_color_indices = read_json(file_path) 
+                
         if event.type == pygame.KEYDOWN: 
             # Check for backspace 
     # Check for backspace
@@ -299,8 +328,9 @@ while running:
         color = color_passive 
         pygame.draw.rect(screen, color, input_recta, 2)
     #pygame.draw.rect(screen, white_re, [460, 390, 200,80]).set_alpha(200)
-    text_surface = base_font.render(user_text, True, (255, 255, 255))
-    text_surfacea = base_font.render(user_numero, True, (255, 255, 255))
+    text_surface = base_font.render(user_text, True, black)
+    text_surfacea = base_font.render(user_numero, True, black)
+    
 
  
     # render at position stated in arguments 
@@ -310,6 +340,7 @@ while running:
     screen.blit(text_surfacea, (input_recta.x+5, input_recta.y+5))
     input_recta.w = max(220, text_surfacea.get_width()+10)
     input_recta.h = max(28, text_surfacea.get_height()+5) 
+    draw_button(screen, button_position, button_text)
 
     y_coords = [50, 110, 170, 230, 290]
     for i, name in enumerate(tasks.keys()):
@@ -335,109 +366,6 @@ while running:
     pygame.display.flip()
 
 pygame.quit()
-
-
-
-
-
-
-
-{
-    "green": {
-      "numero": "1",
-      "color": "(0,255,0)",
-      "colors": ["(0,100,0)", "(107,142,35)", "(173,255,47)"]
-    },
-    "red": {
-      "numero": "2",
-      "color": "(255,0,0)",
-      "colors": ["(139,0,0)", "(250,128,114)", "(178,34,34)"]
-    },
-    "orange": {
-      "numero": "3",
-      "color": "(255,165,0)",
-      "colors": ["(255,140,0)", "(255,127,80)", "(255,255,224)"]
-    },
-    "white": {
-      "numero": "4",
-      "color": "(255, 255, 255)",
-      "colors": ["(211,211,211)", "(105,105,105)", "(47,79,79)"]
-    },
-    "purple": {
-      "numero": "5",
-      "color": "(127,0,255)",
-      "colors": ["(75,0,130)", "(238,130,238)", "(186,85,211)"]
-    }
-  }
-
-import pygame
-import sys
-import tkinter as tk
-from tkinter import filedialog
-import json
-
-# 初始化 pygame
-pygame.init()
-
-# 设置屏幕和一些基本参数
-screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption("Upload JSON Example")
-clock = pygame.time.Clock()
-
-# 按钮参数
-button_color = (0, 255, 0)
-button_position = (350, 500, 100, 50)  # x, y, width, height
-button_text = 'Upload JSON'
-font = pygame.font.Font(None, 36)
-
-def draw_button(screen, position, text):
-    pygame.draw.rect(screen, button_color, position)
-    text_render = font.render(text, True, (255, 255, 255))
-    screen.blit(text_render, (position[0] + 10, position[1] + 10))
-
-def is_button_clicked(position, mouse_pos):
-    x, y, width, height = position
-    return x < mouse_pos[0] < x + width and y < mouse_pos[1] < y + height
-
-def open_file_dialog():
-    root = tk.Tk()
-    root.withdraw()  # 隐藏Tkinter主窗口
-    file_path = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
-    return file_path
-
-def read_json(file_path):
-    try:
-        with open(file_path, 'r') as f:
-            data = json.load(f)
-        print(data)
-    except Exception as e:
-        print(e)
-
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_pos = event.pos
-            if is_button_clicked(button_position, mouse_pos):
-                # 当按钮被点击时，打开文件对话框让用户选择JSON文件
-                file_path = open_file_dialog()
-                if file_path:  # 确保用户选择了文件
-                    read_json(file_path)
-
-    # 清屏
-    screen.fill((0, 0, 0))
-
-    # 绘制按钮
-    draw_button(screen, button_position, button_text)
-
-    pygame.display.flip()
-    clock.tick(60)
-
-pygame.quit()
-sys.exit()
-
 
 ```
 
