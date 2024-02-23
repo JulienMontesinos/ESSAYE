@@ -3,6 +3,7 @@
 import pygame
 from pygame import *
 import json
+import time
 
 pygame.init()
 
@@ -22,17 +23,17 @@ active_commande = False
 active_numero = False
 base_font = pygame.font.Font(None, 28) 
 
-with open('C:/Users/BWG91HX/OneDrive - Groupe BPCE/Documents/Essaie/manager_color.json', 'r') as manager_file:
+with open('color-manager.json', 'r') as manager_file:
     managers_colors_change = json.load(manager_file)
 
-color_indices = {name: 0 for name in managers_colors_change.keys()}
+global_color_indices = {name: 0 for name in managers_colors_change}
 
 screen = pygame.display.set_mode([800,500])
 pygame.display.set_caption('Petit Jeu sur internet')
 #background = black
 framerate = 60
 font = pygame.font.Font('freesansbold.ttf', 16)
-timer = pygame.time.Clock()
+clock = pygame.time.Clock()
 change_color = True
 score = 100000
 
@@ -51,6 +52,11 @@ original_speeds = {'green': 5, 'red': 4, 'orange': 3, 'white': 2, 'purple': 1}
 #les images
 fond = image.load('fond-ecran.jpg')
 fond = fond.convert()
+
+def str_to_rgb(color_str):
+    if color_str.startswith("(") and color_str.endswith(")"):
+        return tuple(map(int, color_str.strip("()").split(",")))
+    return None  
 
 def manager_progress():
     for name, task_info in tasks.items():
@@ -80,11 +86,16 @@ def draw_task(name, y_coord):
     screen.blit(value_text, (20, y_coord -10))
     return task
 
+
 def draw_buttons(name, x_coord):
-    global user_numero, user_text, color_indices  # 使用全局变量
+    global user_numero, user_text, global_color_indices, i  
     color_info = managers_colors_change.get(name, {})
-    colors = color_info.get("colors", ["black"])
-    current_color_index = color_indices[name]
+    default_color_str = color_info.get("color", "(0, 0, 0)")
+    default_color = str_to_rgb(default_color_str)
+    colors = [str_to_rgb(color_str) for color_str in color_info.get("colors", [])]  
+    current_color_index = global_color_indices[name]
+    current_color = colors[current_color_index] if colors else default_color  
+
     if name == 'green':
        color_button = pygame.draw.rect(screen, green, [x_coord, 360, 50, 30])
        color_cost = font.render(str(round(costs[name],2)), True, black)
@@ -95,7 +106,14 @@ def draw_buttons(name, x_coord):
               manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
               screen.blit(manager_text, (x_coord + 6, 450))
            else:
-                manager_button = pygame.draw.rect(screen, green, [x_coord, 440, 55, 30])
+                #manager_button = pygame.draw.rect(screen, color_info['color'], [x_coord, 440, 55, 30])
+                #manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+                #screen.blit(manager_text, (x_coord + 6, 450))
+                #color_info['color_index'] = (color_info['color_indices'] + 1) % len(color_info['colors'])
+                #color_info['color'] = color_info['colors'][color_info['color_indices']]
+                use_color = current_color
+                global_color_indices[name] = (current_color_index + 1) % len(colors) if colors else 0
+                manager_button = pygame.draw.rect(screen, use_color, [x_coord, 440, 55, 30])
                 manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
                 screen.blit(manager_text, (x_coord + 6, 450))
        else:
@@ -110,7 +128,12 @@ def draw_buttons(name, x_coord):
               manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
               screen.blit(manager_text, (x_coord + 6, 450))
            else:
-               manager_button = pygame.draw.rect(screen, red, [x_coord, 440, 55, 30])
+               #manager_button = pygame.draw.rect(screen, red, [x_coord, 440, 55, 30])
+               #manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+               #screen.blit(manager_text, (x_coord + 6, 450))
+               use_color = current_color
+               global_color_indices[name] = (current_color_index + 1) % len(colors) if colors else 0
+               manager_button = pygame.draw.rect(screen, use_color, [x_coord, 440, 55, 30])
                manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
                screen.blit(manager_text, (x_coord + 6, 450))
        else:
@@ -125,7 +148,12 @@ def draw_buttons(name, x_coord):
               manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
               screen.blit(manager_text, (x_coord + 6, 450))
            else:
-              manager_button = pygame.draw.rect(screen, orange, [x_coord, 440, 55, 30])
+              #manager_button = pygame.draw.rect(screen, orange, [x_coord, 440, 55, 30])
+              #manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+              #screen.blit(manager_text, (x_coord + 6, 450))
+              use_color = current_color
+              global_color_indices[name] = (current_color_index + 1) % len(colors) if colors else 0
+              manager_button = pygame.draw.rect(screen, use_color, [x_coord, 440, 55, 30])
               manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
               screen.blit(manager_text, (x_coord + 6, 450))
        else:
@@ -140,7 +168,12 @@ def draw_buttons(name, x_coord):
                 manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
                 screen.blit(manager_text, (x_coord + 6, 450))
            else:
-                manager_button = pygame.draw.rect(screen, white, [x_coord, 440, 55, 30])
+                #manager_button = pygame.draw.rect(screen, white, [x_coord, 440, 55, 30])
+                #manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+                #screen.blit(manager_text, (x_coord + 6, 450))
+                use_color = current_color
+                global_color_indices[name] = (current_color_index + 1) % len(colors) if colors else 0
+                manager_button = pygame.draw.rect(screen, use_color, [x_coord, 440, 55, 30])
                 manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
                 screen.blit(manager_text, (x_coord + 6, 450))
        else:
@@ -155,7 +188,12 @@ def draw_buttons(name, x_coord):
                 manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
                 screen.blit(manager_text, (x_coord + 6, 450))
            else: 
-                manager_button = pygame.draw.rect(screen, purple, [x_coord, 440, 55, 30])
+                #manager_button = pygame.draw.rect(screen, purple, [x_coord, 440, 55, 30])
+                #manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
+                #screen.blit(manager_text, (x_coord + 6, 450))
+                use_color = current_color
+                global_color_indices[name] = (current_color_index + 1) % len(colors) if colors else 0
+                manager_button = pygame.draw.rect(screen, use_color, [x_coord, 440, 55, 30])
                 manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
                 screen.blit(manager_text, (x_coord + 6, 450))
        else:
@@ -214,7 +252,7 @@ running = True
 button_rects = {}
 while running:
     manager_progress()
-    timer.tick(framerate)
+    clock.tick(framerate)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -233,7 +271,7 @@ while running:
                    user_text += event.unicode
                 elif active_numero:
                    user_numero += event.unicode
-      
+    
     # it will set background color of screen 
     screen.fill((255, 255, 255)) 
   
@@ -307,27 +345,27 @@ pygame.quit()
 {
     "green": {
       "numero": "1",
-      "colors_defaut": "green",
+      "color": "(0,255,0)",
       "colors": ["(0,100,0)", "(107,142,35)", "(173,255,47)"]
     },
     "red": {
       "numero": "2",
-      "colors_defaut": "red",
+      "color": "(255,0,0)",
       "colors": ["(139,0,0)", "(250,128,114)", "(178,34,34)"]
     },
     "orange": {
       "numero": "3",
-      "colors_defaut": "orange",
+      "color": "(255,165,0)",
       "colors": ["(255,140,0)", "(255,127,80)", "(255,255,224)"]
     },
     "white": {
       "numero": "4",
-      "colors_defaut": "white",
+      "color": "(255, 255, 255)",
       "colors": ["(211,211,211)", "(105,105,105)", "(47,79,79)"]
     },
     "purple": {
       "numero": "5",
-      "colors_defaut": "purple",
+      "color": "(127,0,255)",
       "colors": ["(75,0,130)", "(238,130,238)", "(186,85,211)"]
     }
   }
