@@ -370,6 +370,73 @@ pygame.quit()
     }
   }
 
+import pygame
+import sys
+import tkinter as tk
+from tkinter import filedialog
+import json
+
+# 初始化 pygame
+pygame.init()
+
+# 设置屏幕和一些基本参数
+screen = pygame.display.set_mode((800, 600))
+pygame.display.set_caption("Upload JSON Example")
+clock = pygame.time.Clock()
+
+# 按钮参数
+button_color = (0, 255, 0)
+button_position = (350, 500, 100, 50)  # x, y, width, height
+button_text = 'Upload JSON'
+font = pygame.font.Font(None, 36)
+
+def draw_button(screen, position, text):
+    pygame.draw.rect(screen, button_color, position)
+    text_render = font.render(text, True, (255, 255, 255))
+    screen.blit(text_render, (position[0] + 10, position[1] + 10))
+
+def is_button_clicked(position, mouse_pos):
+    x, y, width, height = position
+    return x < mouse_pos[0] < x + width and y < mouse_pos[1] < y + height
+
+def open_file_dialog():
+    root = tk.Tk()
+    root.withdraw()  # 隐藏Tkinter主窗口
+    file_path = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
+    return file_path
+
+def read_json(file_path):
+    try:
+        with open(file_path, 'r') as f:
+            data = json.load(f)
+        print(data)
+    except Exception as e:
+        print(e)
+
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_pos = event.pos
+            if is_button_clicked(button_position, mouse_pos):
+                # 当按钮被点击时，打开文件对话框让用户选择JSON文件
+                file_path = open_file_dialog()
+                if file_path:  # 确保用户选择了文件
+                    read_json(file_path)
+
+    # 清屏
+    screen.fill((0, 0, 0))
+
+    # 绘制按钮
+    draw_button(screen, button_position, button_text)
+
+    pygame.display.flip()
+    clock.tick(60)
+
+pygame.quit()
+sys.exit()
 
 
 ```
