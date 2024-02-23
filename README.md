@@ -27,7 +27,8 @@ base_font = pygame.font.Font(None, 28)
 button_color = (139, 0, 0) 
 button_position = (480, 280, 140, 30)
 button_text = 'Upload JSON'
-global_color_indices = ''
+global_color_indices = []
+managers_colors_change ={}
 
 screen = pygame.display.set_mode([800,500])
 pygame.display.set_caption('Petit Jeu sur internet')
@@ -89,7 +90,7 @@ def draw_task(name, y_coord):
 
 
 def draw_buttons(name, x_coord):
-    global user_numero, user_text, global_color_indices, managers_colors_change 
+    global user_numero, user_text, global_color_indices, managers_colors_change
     color_info = managers_colors_change.get(name, {})
     default_color_str = color_info.get("color", "(0, 0, 0)")
     default_color = str_to_rgb(default_color_str)
@@ -367,6 +368,7 @@ while running:
     pygame.display.flip()
 
 pygame.quit()
+
 
 
 ```
