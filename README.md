@@ -372,46 +372,6 @@ pygame.quit()
 
 
 
-
-
-
-
-# 假设 JSON 数据已经被加载并解析为一个字典 named colors_change
-colors_change = {
-  "green": {"numero": "1", "color_sequence": ["darkgreen", "lightgreen", "forestgreen"], "user_input_color": "user_input"},
-  "red": {"numero": "2", "color_sequence": ["darkred", "lightcoral", "indianred"], "user_input_color": "user_input"},
-  ...
-}
-
-# 初始化颜色索引字典
-color_indices = {name: 0 for name in colors_change.keys()}
-
-def draw_buttons(name, x_coord):
-    global user_numero, user_text, color_indices  # 使用全局变量
-    color_info = colors_change.get(name, {})
-    color_sequence = color_info.get("color_sequence", ["black"])  # 默认颜色为黑色
-    current_color_index = color_indices[name]
-    
-    # 尝试基于用户输入的文本设置颜色
-    try:
-        user_input_color = pygame.Color(user_text) if user_text else pygame.Color(color_sequence[current_color_index])
-    except ValueError:
-        user_input_color = pygame.Color(color_sequence[current_color_index])
-    
-    # 根据用户输入设置颜色或循环使用颜色序列
-    if user_numero == color_info.get("numero") and user_text:
-        assigned_color = user_input_color
-    else:
-        assigned_color = pygame.Color(color_sequence[current_color_index])
-        # 更新颜色索引以循环颜色序列
-        color_indices[name] = (current_color_index + 1) % len(color_sequence)
-    
-    # 绘制管理员按钮
-    manager_button = pygame.draw.rect(screen, assigned_color, [x_coord, 440, 55, 30])
-    manager_text = font.render(str(round(manager_costs[name], 2)), True, black)
-    screen.blit(manager_text, (x_coord + 6, 450))
-    return manager_button
-
 ```
 
 
