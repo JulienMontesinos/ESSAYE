@@ -1,54 +1,6 @@
 # ESSAYE
 ```
-import pygame
-from pygame import *
-import json
-import tkinter as tk
-from tkinter import filedialog
 
-pygame.init()
-
-red = (255,0,0)
-green = (0,255,0)
-blue = (0,0,255)
-white = (128,128,128)
-black = (0,0,0)
-purple = (127,0,255)
-orange = (255,165,0)
-white_re = (255, 255, 255)
-user_text = ''
-user_numero = ''
-color_active = pygame.Color((135,206,250))
-color = color_passive = white_re
-active_commande = False
-active_numero = False
-base_font = pygame.font.Font(None, 28)
-button_color = (139, 0, 0) 
-button_position = (480, 280, 140, 30)
-button_text = 'Upload JSON'
-global_color_indices = ''
-
-screen = pygame.display.set_mode([800,500])
-pygame.display.set_caption('Petit Jeu sur internet')
-#background = black
-framerate = 60
-font = pygame.font.Font('freesansbold.ttf', 16)
-clock = pygame.time.Clock()
-change_color = True
-score = 100000
-
-costs = {'green': 1, 'red': 2, 'orange': 3, 'white': 4, 'purple': 5}
-#colors_managers_numeros = {'1': green,'2': red, '3': orange, '4': white, '5': purple }
-owned = {'green': False, 'red': False, 'orange': False, 'white': False, 'purple': False}
-manager_costs = {'green': 100, 'red': 500, 'orange': 1800, 'white': 4000, 'purple': 10000}
-tasks = {
-    'green': {'color': green, 'value': 1, 'draw': False, 'length': 0, 'speed': 5, 'color_index': 0, 'colors': [(144, 238, 144), (34, 139, 34), (60, 179, 113)]},
-    'red': {'color': red, 'value': 2, 'draw': False, 'length': 0, 'speed': 4, 'color_index': 0, 'colors': [(255, 69, 0), (128, 0, 0), (255, 102, 102)]},
-    'orange': {'color': orange, 'value': 3, 'draw': False, 'length': 0, 'speed': 3, 'color_index': 0, 'colors': [(255, 239, 213), (255, 140, 0), (255, 220, 180)]},
-    'white': {'color': white, 'value': 4, 'draw': False, 'length': 0, 'speed': 2, 'color_index': 0, 'colors': [(169, 169, 169), (238, 216, 174), (139, 131, 120)]},
-    'purple': {'color': purple, 'value': 5, 'draw': False, 'length': 0, 'speed': 1, 'color_index': 0, 'colors': [(138, 43, 226), (153, 50, 204), (216, 191, 216)]}
-}
-original_speeds = {'green': 5, 'red': 4, 'orange': 3, 'white': 2, 'purple': 1}
 #les images
 fond = image.load('fond-ecran.jpg')
 fond = fond.convert()
